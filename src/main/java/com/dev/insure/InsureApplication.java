@@ -1,5 +1,7 @@
 package com.dev.insure;
 
+import com.dev.insure.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
