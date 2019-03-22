@@ -5,7 +5,7 @@ import com.dev.insure.utils.INSURANCE_OBJECT_TYPE;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 
 @Entity
@@ -27,7 +27,7 @@ public class Agreement {
 
     private String comment;
 
-    @NotNull
+    @Size(min = 10, max = 10)
     private String fee;
 
     @ManyToOne

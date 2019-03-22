@@ -4,9 +4,11 @@ import com.dev.insure.model.Agreement;
 import com.dev.insure.repository.AgreementRepository;
 import com.dev.insure.service.AgreementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AgreementServiceImpl implements AgreementService {
 
     private final AgreementRepository repository;
