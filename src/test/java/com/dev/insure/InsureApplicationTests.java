@@ -12,6 +12,8 @@ import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.Calendar;
 
+import static org.junit.Assert.assertNotNull;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class InsureApplicationTests {
@@ -26,7 +28,8 @@ public class InsureApplicationTests {
 	@Test
 	@Transactional
 	public void addClientTest() {
-		clientRepository.save(new Client("1234567890","TEST", new Date(Calendar.getInstance().getTimeInMillis())));
+		assertNotNull(clientRepository.save(new Client("2200123456",
+				"Иванов Иван Иванович", new Date(Calendar.getInstance().getTimeInMillis()))));
 	}
 
 

@@ -1,11 +1,10 @@
 package com.dev.insure.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -20,6 +19,12 @@ public class Client{
 
     @Column(name = "birthdate")
     private Date birthDate;
+
+    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Agreement> agreements = new HashSet<>();
+
+
+
 
     public Client() {}
 
