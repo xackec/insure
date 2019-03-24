@@ -78,6 +78,58 @@
           </fieldset>
 		  <fieldset>
 			<legend></legend>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="num">№ договора</label>
+					<input type="text" class="form-control" id="num" placeholder="Номер">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="creationDate">Дата заключения</label>
+					<input type="text" class="form-control" id="creationDate" placeholder="Дата">
+				</div>
+			</div>
+		  </fieldset>
+		  <fieldset>
+			<legend>Страхователь</legend>
+			<div class="form-row">
+				<div class="form-group col-md-4" id="chooseBtn">
+					<script type="text/javascript">
+						function mypopup(url) {
+							width = window.screen.width;
+							height = window.screen.height;
+							mywindow = window.open(url, "Title",
+								"location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width="
+											+ width + ",height=" + height);
+							mywindow.moveTo(0, 0);
+							mywindow.focus();
+						}
+					</script>
+				<input type="submit" lass="btn btn-primary" onclick='mypopup("http://localhost:8080/client.jsp");return false;' value="Submit"/>
+				</div>
+				<div class="form-group col-md-4" id="fullname">
+					<input type="text" class="form-control" id="fullName" placeholder="Фамилия Имя Отчество">
+				</div>
+				<div class="form-group col-md-4">
+					<button type="submit" class="btn btn-primary">Изменить</button>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-4">
+				<label for="validFrom">Дата рождения</label>
+					<div class="input-group date">
+						<input type="text" class="form-control" id="birthDate" placeholder="Дата рождения">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>	
+				</div>
+				<div class="form-group col-md-4">
+					<label for="serial">Паспорт: серия</label>
+					<input type="text" class="form-control" id="serial" placeholder="Серия">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="number">№</label>
+					<input type="text" class="form-control" id="number" placeholder="Номер">
+				</div>
+			</div>
 		  </fieldset>
     </div>
 </body>
