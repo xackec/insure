@@ -12,9 +12,10 @@
 	<artifactId>insure</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>insure</name>
-	<description>Demo project for Spring Boot</description>
+	<packaging>war</packaging>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -32,12 +33,6 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.4.1212</version>
 		</dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.1.Final</version>
-        </dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -48,6 +43,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<!-- Need this to compile JSP -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>8.5.11</version>
+		</dependency>
+
+		<!-- Optional, test for static content, bootstrap CSS -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

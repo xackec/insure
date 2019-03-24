@@ -1,18 +1,17 @@
 package com.dev.insure.controller;
 
+import com.dev.insure.model.Agreement;
 import com.dev.insure.service.AgreementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 86400)
-@RestController
-@RequestMapping({"/api"})
+@Controller
 public class AgreementController {
 
     private final AgreementService agreementService;
@@ -22,8 +21,19 @@ public class AgreementController {
         this.agreementService = agreementService;
     }
 
-    @GetMapping("/agreements")
-    public List findAll() {
-        return agreementService.findAll();
+    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+    public String listAgreements(ModelMap model) {
+
+        List<Agreement> agreements = agreementService.findAll();
+        model.addAttribute("agreements", agreements);
+        return "index";
     }
+
+    @RequestMapping(value = { "/create" }, method = RequestMethod.GET)
+    public String newUser(ModelMap model) {
+        Agreement agreement = new Agreement();
+        model.addAttribute("agreement", agreement);
+        return "agreement";
+    }
+
 }

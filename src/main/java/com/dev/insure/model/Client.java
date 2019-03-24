@@ -20,7 +20,7 @@ public class Client{
     @Column(name = "birthdate")
     private Date birthDate;
 
-    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Agreement> agreements = new HashSet<>();
 
 
