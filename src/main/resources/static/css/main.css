@@ -1,0 +1,55 @@
+
+body, #mainWrapper {
+    height: 100%;
+    background-color:rgb(245, 245, 245);
+}
+
+body, .form-control{
+    font-size:12px!important;
+}
+
+.col-md-6{
+    width: 300px;
+}
+
+.col-md-4{
+    width: 200px;
+}
+
+.col-md-2{
+    width: 200px;
+}
+
+.has-error{
+    color:red;
+}
+
+.panel-create{
+    text-align: center;
+}
+
+.calculate{
+    text-align: center;
+}
+
+#chooseBtn{
+    text-align: right;
+}
+
+#fullname{
+    text-align: center;
+    width: 400px;
+}
+
+.generic-container {
+  position:fixed;
+  width:80%;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.custom-width {
+    width: 80px !important;
+}
