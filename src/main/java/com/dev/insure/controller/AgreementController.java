@@ -3,18 +3,25 @@ package com.dev.insure.controller;
 import com.dev.insure.model.Agreement;
 import com.dev.insure.model.Client;
 import com.dev.insure.service.AgreementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class AgreementController {
+
+    private final Logger logger = LoggerFactory.getLogger(AgreementController.class);
 
     private final AgreementService agreementService;
 
@@ -36,5 +43,13 @@ public class AgreementController {
         Agreement agreement = new Agreement();
         model.addAttribute("agreement", agreement);
         return "agreement";
+    }
+
+    @RequestMapping(value = "/agreements", method = RequestMethod.POST)
+    public String saveOrUpdateUser(@ModelAttribute("userForm") @Validated Agreement agreement,
+                                   BindingResult result, Model model,
+                                   final RedirectAttributes redirectAttributes) {
+        logger.debug("saveOrUpdateAgreement() : {}", agreement);
+        return "agreements/agreement";
     }
 }

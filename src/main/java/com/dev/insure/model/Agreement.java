@@ -33,6 +33,9 @@ public class Agreement {
     @ManyToOne
     private Client client;
 
+    @ManyToOne
+    private Subject subject;
+
     public Agreement() {}
 
     public Agreement(int id, int amount, Date from, Date to, String fee) {
@@ -97,5 +100,17 @@ public class Agreement {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 }

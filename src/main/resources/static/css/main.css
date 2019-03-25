@@ -8,6 +8,11 @@ body, .form-control{
     font-size:12px!important;
 }
 
+h1{
+    font-size:32px!important;
+    text-align: center;
+}
+
 .col-md-6{
     width: 300px;
 }
@@ -44,6 +49,12 @@ body, .form-control{
     text-align: center;
     width: 400px;
 }
+
+#birthdt{
+    width: 160px;
+}
+
+
 
 .generic-container {
   position:fixed;

@@ -23,7 +23,14 @@ public class Client{
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Agreement> agreements = new HashSet<>();
 
+    @Transient
+    private String surname;
 
+    @Transient
+    private String name;
+
+    @Transient
+    private String name2;
 
 
     public Client() {}
@@ -56,5 +63,29 @@ public class Client{
 
     public Date getBirthDate() {
         return birthDate;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName2() {
+        return name2;
+    }
+
+    public void setName2(String name2) {
+        this.name2 = name2;
     }
 }

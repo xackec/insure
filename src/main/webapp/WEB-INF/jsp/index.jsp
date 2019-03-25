@@ -9,6 +9,8 @@
 <link href="/css/main.css" rel="stylesheet">
 </head>
 
+<jsp:include page="fragments/header.jsp" />
+
 <body>
 	<div class="generic-container">
             <div class="panel panel-default">
@@ -34,16 +36,15 @@
                             <td>${agreement.client.fullName}</td>
                             <td>${agreement.fee}</td>
                             <td>${agreement.validTo}</td>
-                            <td><a href="<c:url value='/edit-agreement-${agreement.id}' />">Открыть</a></td>
+							<td><a href="<c:url value="/agreements/${agreement.id}" />">Открыть</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
-             <div class="well">
-                        <a href="<c:url value='/create' />">Создать договор</a>
-              </div>
         </div>
 </body>
+
+<jsp:include page="fragments/footer.jsp" />
 
 </html>

@@ -1,7 +1,10 @@
-﻿<!DOCTYPE html>
+﻿<%@ page session="false"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<!DOCTYPE html>
 <head>
 <meta charset=utf-8>
 <link rel="stylesheet" type="text/css"
@@ -12,31 +15,57 @@
 <script src="/js/bootstrap-datepicker.js"></script>
 </head>
 
+<jsp:include page="fragments/header.jsp" />
+
 <body>
 
+	<c:choose>
+		<c:when test="${agreement['new']}">
+			<h1>Новый договор</h1>
+		</c:when>
+		<c:otherwise>
+			<h1>Изменить договор</h1>
+		</c:otherwise>
+	</c:choose>
+	<br />
+	
+	<spring:url value="/agreements" var="agreementActionUrl" />
+
+	<form:form class="form-group" method="post" modelAttribute="agreement" action="${agreementActionUrl}">
+	
+	<form:hidden path="id" />
+
     <div class="generic-container">
-    <div class="panel-create"><span class="lead">Оформление договора</span></div>
         <fieldset>
           <legend>Расчёт</legend>
             <div class="form-row">
-              <div class="form-group col-md-6">
+			<spring:bind path="amount">
+              <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
                 <label for="amount">Страховая сумма</label>
-                <input type="text" class="form-control" id="amount" path="amount" placeholder="Сумма в рублях" />
+                <form:input type="text" class="form-control" id="amount" path="amount" placeholder="Сумма в рублях" />
+				<form:errors path="amount" class="control-label" />
               </div>
-			  <div class="form-group col-md-4">
+			 </spring:bind>
+			 
+			 <spring:bind path="validFrom">
+			  <div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
 				<label for="validFrom">Действителен с</label>
 				<div class="input-group date">
-					<input type="text" class="form-control" id="validFrom" placeholder="Дата начала">
+					<form:input type="text" class="form-control" id="validFrom" path="validFrom" placeholder="Дата начала" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
-			</div>
-			<div class="form-group col-md-2">
+			  </div>
+			</spring:bind>
+			
+			<spring:bind path="validTo">
+			<div class="form-group col-md-2 ${status.error ? 'has-error' : ''}">
 				<label for="validTo">По</label>
 				<div class="input-group date" id="two">
-					<input type="text" class="form-control" id="validTo" placeholder="Дата окончания">
+					<form:input type="text" class="form-control" id="validTo" path="validTo" placeholder="Дата окончания" />
                      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
               </div>
 			</div>
+			</spring:bind>
               <script>
                   $('.input-group.date').datepicker({
                       format: "yyyy/mm/dd",
@@ -46,25 +75,43 @@
                   });
               </script>
             </div>
-            <div class="form-group col-md-6">
+			
+			<spring:bind path="subject.objType">
+            <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
               <label for="subjectType">Тип недвижимости</label>
-              <select id="subjectType" class="form-control">
-					<c:forEach items="<%= com.dev.insure.utils.INSURANCE_OBJECT_TYPE.values() %>" var="state">
-						<option value="${state}">${state}</option>        
-					</c:forEach>
-				</select>
+					<form:select path="subject.objType" id="subjectType" items="<%= com.dev.insure.utils.INSURANCE_OBJECT_TYPE.values() %>" multiple="false" size="1" class="form-control" />
+					<form:errors path="subject.objType" class="control-label" />
             </div>
-            <div class="form-group col-md-6">
+			</spring:bind>
+			
+			<spring:bind path="subject.constructionYear">
+            <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
               <label for="subjectYear">Год постройки</label>
-              <input type="text" class="form-control" id="subjectYear" placeholder="Год">
+              <form:input type="number" min="1900" max="2019" step="1" path="subject.constructionYear" class="form-control" id="subjectYear" />
+			  <form:errors path="subject.constructionYear" class="control-label" />
             </div>
-			<div class="form-group col-md-6">
+			</spring:bind>
+			
+			<spring:bind path="subject.square">
+			<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
               <label for="square">Площадь</label>
-              <input type="text" class="form-control" id="square" placeholder="кв. м.">
+              <form:input type="text" path="subject.square" class="form-control" id="square" placeholder="кв. м." />
+			  <form:errors path="subject.square" class="control-label" />
             </div>
+			</spring:bind>
+			
 			<div class="form-group col-md-9 calculate">
-              <button type="submit" class="btn btn-primary">Рассчитать</button>
+              <button class="btn btn-primary" onclick="calcFunction()">Рассчитать</button>
+			  <script>
+				function calcFunction()
+				{
+				document.getElementById("fee").value = "123.45";
+				document.getElementById("calcDate").value = "now";
+				return false;
+				}
+				</script>
             </div>
+			
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="calcDate">Дата расчёта</label>
@@ -132,5 +179,6 @@
 			</div>
 		  </fieldset>
     </div>
+	</form:form>
 </body>
 </html>

@@ -4,6 +4,8 @@ import com.dev.insure.utils.INSURANCE_OBJECT_TYPE;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "subjects")
@@ -47,6 +49,9 @@ public class Subject {
 
     @NotNull
     private int flatnum;
+
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<Agreement> subjects = new HashSet<>();
 
     public Subject() {};
 
