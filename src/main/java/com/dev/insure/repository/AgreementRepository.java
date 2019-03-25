@@ -9,5 +9,7 @@ public interface AgreementRepository extends Repository<Agreement, Integer> {
 
     List findAll();
 
+    Agreement findById(Integer id);
+
     Agreement save(Agreement agreement);
 }

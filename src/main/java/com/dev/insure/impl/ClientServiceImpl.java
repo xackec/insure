@@ -21,7 +21,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
-        return null;
+        return clientRepository.findAll();
     }
 
     @Override
@@ -31,11 +31,16 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client create(Client client) {
-        return null;
+        return clientRepository.save(client);
     }
 
     @Override
     public Client update(Client client) {
         return null;
+    }
+
+    @Override
+    public Client findById(String id) {
+        return clientRepository.findById(id);
     }
 }

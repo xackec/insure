@@ -25,6 +25,10 @@ public class Agreement {
     @NotNull
     private  Date validTo;
 
+    private  Date calculationDate;
+
+    private Date submitDate;
+
     private String comment;
 
     @NotNull
@@ -112,5 +116,21 @@ public class Agreement {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Date getCalculationDate() {
+        return calculationDate;
+    }
+
+    public void setCalculationDate(Date calculationDate) {
+        this.calculationDate = calculationDate;
+    }
+
+    public Date getSubmitDate() {
+        return submitDate;
+    }
+
+    public void setSubmitDate(Date submitDate) {
+        this.submitDate = submitDate;
     }
 }

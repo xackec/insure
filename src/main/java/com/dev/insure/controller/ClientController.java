@@ -10,15 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/clients")
@@ -36,8 +34,7 @@ public class ClientController {
     @RequestMapping(value = { "" }, method = RequestMethod.GET)
     public String clients(ModelMap model) {
         logger.debug("clients()");
-        List<Client> clients = new ArrayList<>();
-        model.addAttribute("clients", clients);
+        model.addAttribute("clients", clientService.findAll());
         return "search-client";
     }
 
@@ -57,9 +54,21 @@ public class ClientController {
 
 
     @RequestMapping(value = { "/search-{fullName}" }, method = RequestMethod.GET)
-    public String searchClientByFullname(ModelMap model) {
-        Client client = new Client();
-        model.addAttribute("clients", client);
-        return "client";
+    public String searchClientByFullname(@PathVariable("fullName") String fullName, Model model) {
+        logger.debug("search client by FIO - " + fullName);
+        List<Client> clients = clientService.findByFullName(fullName);
+        model.addAttribute("clients", clients);
+        return "search-client";
+    }
+
+
+    @RequestMapping(value = { "/{passportSN}"},  method = RequestMethod.GET)
+    public String search(Model model, @PathVariable("passportSN")String passportSN) {
+        logger.debug("POST client with id- " + passportSN);
+        Client client = clientService.findById(passportSN);
+
+        model.addAttribute("client", client);
+
+        return "forward:/create";
     }
 }

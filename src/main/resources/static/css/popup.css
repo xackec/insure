@@ -1,0 +1,23 @@
+body, #mainWrapper {
+    background-color:rgb(245, 245, 245);
+}
+
+body, .form-control{
+    font-size:12px!important;
+}
+
+#chooseBtn{
+    text-align: right;
+}
+
+#closeBtn{
+    text-align: left;
+}
+
+.generic-container {
+  position:fixed;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+}

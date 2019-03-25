@@ -9,6 +9,8 @@ public interface ClientRepository extends Repository<Client,String> {
 
     Client save(Client client);
 
+    Client findById(String id);
+
     List<Client> findAll();
 
     List<Client> findByFullName(String fullName);

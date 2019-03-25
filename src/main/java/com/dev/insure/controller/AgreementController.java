@@ -30,7 +30,7 @@ public class AgreementController {
         this.agreementService = agreementService;
     }
 
-    @RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/" }, method = RequestMethod.GET)
     public String listAgreements(ModelMap model) {
 
         List<Agreement> agreements = agreementService.findAll();
@@ -50,6 +50,17 @@ public class AgreementController {
                                    BindingResult result, Model model,
                                    final RedirectAttributes redirectAttributes) {
         logger.debug("saveOrUpdateAgreement() : {}", agreement);
-        return "agreements/agreement";
+        return "agreement";
     }
+
+    @RequestMapping(value = "/agreements/{id}", method = RequestMethod.GET)
+    public String showAgreement(@PathVariable("id") int id, Model model) {
+        logger.debug("showAgreement() id: {}", id);
+
+        Agreement agreement = agreementService.findById(id);
+        model.addAttribute("agreement", agreement);
+
+        return "agreement";
+    }
+
 }

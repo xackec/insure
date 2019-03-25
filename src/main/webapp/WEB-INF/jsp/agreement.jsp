@@ -32,8 +32,6 @@
 	<spring:url value="/agreements" var="agreementActionUrl" />
 
 	<form:form class="form-group" method="post" modelAttribute="agreement" action="${agreementActionUrl}">
-	
-	<form:hidden path="id" />
 
     <div class="generic-container">
         <fieldset>
@@ -68,7 +66,7 @@
 			</spring:bind>
               <script>
                   $('.input-group.date').datepicker({
-                      format: "yyyy/mm/dd",
+                      format: "mm/dd/yyyy",
                       todayBtn: "linked",
                       autoclose: true,
                       todayHighlight: true
@@ -101,39 +99,99 @@
 			</spring:bind>
 			
 			<div class="form-group col-md-9 calculate">
-              <button class="btn btn-primary" onclick="calcFunction()">Рассчитать</button>
+              <input type="button" class="btn btn-primary" onclick="calcFunction()" value="Рассчитать" />
 			  <script>
 				function calcFunction()
 				{
-				document.getElementById("fee").value = "123.45";
-				document.getElementById("calcDate").value = "now";
+				    var koef1;
+					switch(document.getElementById("subjectType").value) {
+						case 'Квартира': koef1 = 1.7;
+						break;
+						case 'Дом': koef1 = 1.5;
+						break;
+						case '': koef1 = 1.3;
+						break;
+					}
+					var koef2;
+					var temp = document.getElementById("subjectYear").value;
+					if(temp<2000) {
+						koef2 = 1.3;
+					} else if(temp<=2014) {
+						koef2 = 1.6;
+					} else if(temp>2014) {
+						koef2 = 2.0;
+					}
+					var koef3;
+					var tmp = document.getElementById("square").value;
+					if(temp<50) {
+						koef3 = 1.2;
+					} else if(temp<=100) {
+						koef3 = 1.5;
+					} else if(temp>100) {
+						koef3 = 2.0;
+					}
+					alert(koef1);
+					alert(koef2);
+					alert(koef3);
+					var date1 = new Date(document.getElementById("validFrom").value);
+					var date2 = new Date(document.getElementById("validTo").value);
+					var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+					var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+					var amount = document.getElementById("amount").value;
+				    document.getElementById("fee").value = (amount/diffDays)*koef1*koef2*koef3;
+					document.getElementById("calcDate").value = new Date().toJSON().slice(0,10).replace(/-/g,'/');
 				return false;
 				}
 				</script>
             </div>
 			
 			<div class="form-row">
-				<div class="form-group col-md-6">
+			<spring:bind path="subject.square">
+				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
 					<label for="calcDate">Дата расчёта</label>
-					<input type="text" class="form-control" id="calcDate" placeholder="Дата">
+					<form:input type="text" path="calculationDate" class="form-control" id="calcDate" placeholder="Дата" readonly="true" />
+					<form:errors path="calculationDate" class="control-label" />
 				</div>
-				<div class="form-group col-md-6">
+			</spring:bind>
+			
+			<spring:bind path="fee">
+				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
 					<label for="fee">Премия</label>
-					<input type="text" class="form-control" id="fee" placeholder="Рубли">
+					<form:input type="text" path="fee" class="form-control" id="fee" placeholder="Рубли" />
+					<form:errors path="fee" class="control-label" />
 				</div>
+			</spring:bind>
 			</div>
+			
           </fieldset>
 		  <fieldset>
 			<legend></legend>
 			<div class="form-row">
-				<div class="form-group col-md-6">
+			<spring:bind path="id">
+				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
 					<label for="num">№ договора</label>
-					<input type="text" class="form-control" id="num" placeholder="Номер">
+					<form:input type="text" path="id" class="form-control" id="num" placeholder="Номер" />
+					<form:errors path="id" class="control-label" />
 				</div>
+				</spring:bind>
+				
+				<spring:bind path="submitDate">
 				<div class="form-group col-md-6">
 					<label for="creationDate">Дата заключения</label>
-					<input type="text" class="form-control" id="creationDate" placeholder="Дата">
+					<div class="input-group date" id="two">
+						<form:input type="text" class="form-control" id="creationDate" path="submitDate" placeholder="Дата" />
+						 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>
 				</div>
+				</spring:bind>
+				<script>
+                  $('.input-group.date').datepicker({
+                      format: "mm/dd/yyyy",
+                      todayBtn: "linked",
+                      autoclose: true,
+                      todayHighlight: true
+                  });
+              </script>
 			</div>
 		  </fieldset>
 		  <fieldset>
@@ -146,16 +204,20 @@
 							height = window.screen.height;
 							mywindow = window.open(url, "Title",
 								"location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width="
-											+ width/1.92 + ",height=" + height/2);
+											+ 800 + ",height=" + height/2);
 							mywindow.moveTo(0, 0);
 							mywindow.focus();
 						}
 					</script>
 				<input type="submit" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients");return false;' value="Выбрать"/>
 				</div>
+				
+				
 				<div class="form-group col-md-4" id="fullname">
 					<input type="text" class="form-control" id="fullName" placeholder="Фамилия Имя Отчество">
 				</div>
+				
+				
 				<div class="form-group col-md-4">
 					<button type="submit" class="btn btn-primary">Изменить</button>
 				</div>

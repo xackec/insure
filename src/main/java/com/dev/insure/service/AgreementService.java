@@ -8,6 +8,8 @@ public interface AgreementService {
 
     List<Agreement> findAll();
 
+    Agreement findById(int id);
+
     Agreement create(Agreement agreement);
 
     Agreement update(Agreement update);

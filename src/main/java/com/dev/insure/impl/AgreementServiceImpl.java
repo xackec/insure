@@ -32,4 +32,9 @@ public class AgreementServiceImpl implements AgreementService {
     public Agreement update(Agreement update) {
         return null;
     }
+
+    @Override
+    public Agreement findById(int id) {
+        return repository.findById(id);
+    }
 }
