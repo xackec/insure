@@ -1,6 +1,7 @@
 package com.dev.insure.controller;
 
 import com.dev.insure.model.Agreement;
+import com.dev.insure.model.Client;
 import com.dev.insure.service.AgreementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,5 +37,4 @@ public class AgreementController {
         model.addAttribute("agreement", agreement);
         return "agreement";
     }
-
 }

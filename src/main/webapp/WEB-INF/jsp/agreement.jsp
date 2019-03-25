@@ -99,12 +99,12 @@
 							height = window.screen.height;
 							mywindow = window.open(url, "Title",
 								"location=0,status=1,scrollbars=1,resizable=1,menubar=0,toolbar=no,width="
-											+ width + ",height=" + height);
+											+ width/1.92 + ",height=" + height/2);
 							mywindow.moveTo(0, 0);
 							mywindow.focus();
 						}
 					</script>
-				<input type="submit" lass="btn btn-primary" onclick='mypopup("http://localhost:8080/client.jsp");return false;' value="Submit"/>
+				<input type="submit" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients");return false;' value="Выбрать"/>
 				</div>
 				<div class="form-group col-md-4" id="fullname">
 					<input type="text" class="form-control" id="fullName" placeholder="Фамилия Имя Отчество">

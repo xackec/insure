@@ -36,6 +36,10 @@ body, .form-control{
     text-align: right;
 }
 
+#closeBtn{
+    text-align: left;
+}
+
 #fullname{
     text-align: center;
     width: 400px;
@@ -43,7 +47,7 @@ body, .form-control{
 
 .generic-container {
   position:fixed;
-  width:80%;
+  width: 850px;
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 20px;

@@ -5,9 +5,11 @@ import com.dev.insure.model.Client;
 import com.dev.insure.repository.ClientRepository;
 import com.dev.insure.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -20,6 +22,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> findAll() {
         return null;
+    }
+
+    @Override
+    public List<Client> findByFullName(String fullName) {
+        return clientRepository.findByFullName(fullName);
     }
 
     @Override

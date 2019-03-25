@@ -10,4 +10,6 @@ public interface ClientRepository extends Repository<Client,String> {
     Client save(Client client);
 
     List<Client> findAll();
+
+    List<Client> findByFullName(String fullName);
 }

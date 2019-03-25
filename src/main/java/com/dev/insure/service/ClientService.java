@@ -9,6 +9,8 @@ public interface ClientService {
 
     List<Client> findAll();
 
+    List<Client> findByFullName(String fullName);
+
     Client create(Client client);
 
     Client update(Client client);

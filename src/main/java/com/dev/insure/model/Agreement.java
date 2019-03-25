@@ -5,7 +5,7 @@ import com.dev.insure.utils.INSURANCE_OBJECT_TYPE;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Digits;
 import java.sql.Date;
 
 @Entity
@@ -13,10 +13,10 @@ import java.sql.Date;
 public class Agreement {
 
     @Id
-    @NotNull
+    @Digits(integer=6, fraction=6)
     private Integer id;
 
-    @Digits(integer=6, fraction=0, message = "Не менее 6-ти знаков")
+    @NotNull
     private Integer amount;
 
     @NotNull
