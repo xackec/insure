@@ -1,8 +1,11 @@
 package com.dev.insure.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.io.Serializable;
-import java.sql.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,103 +14,100 @@ import java.util.Set;
 public class Client{
 
     @Id
-    @Column(name = "passportsn", unique = true, nullable = false)
-    private String passportSN;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
+    @Pattern(regexp="^(0|[1-9][0-9]*)$")
+    @Column(name = "passports", nullable = false)
+    private String passportS;
+
+    @Pattern(regexp="^(0|[1-9][0-9]*)$")
+    @Column(name = "passportn", nullable = false)
+    private String passportN;
+
+    @Pattern(regexp = "^[а-яА-Яa-zA-Z0-9.\\-\\/+=@_ ]*$")
+    @NotEmpty
     @Column(name = "fullname")
     private String fullName;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthdate")
     private Date birthDate;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Agreement> agreements = new HashSet<>();
 
-    @Transient
-    private String surname;
-
-    @Transient
-    private String name;
-
-    @Transient
-    private String name2;
-
-    @Transient
-    private String seriaN;
-
-    @Transient
-    private String numberN;
-
-
     public Client() {}
 
-    public Client(String passportSN, String fullName, Date birthDate) {
-        this.passportSN = passportSN;
+    public Client(String passportS, String passportN, String fullName, Date birthDate) {
+        this.passportS = passportS;
+        this.passportN = passportN;
         this.fullName = fullName;
         this.birthDate = birthDate;
     }
 
-    public void setPassportSN(String passportSN) {
-        this.passportSN = passportSN;
+    public Long getId() {
+        return id;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public String getPassportS() {
+        return passportS;
     }
 
-    public String getPassportSN() {
-        return passportSN;
+    public void setPassportS(String passportS) {
+        this.passportS = passportS;
+    }
+
+    public String getPassportN() {
+        return passportN;
+    }
+
+    public void setPassportN(String passportN) {
+        this.passportN = passportN;
     }
 
     public String getFullName() {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Date getBirthDate() {
         return birthDate;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public Set<Agreement> getAgreements() {
+        return agreements;
     }
 
-    public String getName() {
-        return name;
+    public void setAgreements(Set<Agreement> agreements) {
+        this.agreements = agreements;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean isNew() {
+        return (this.id == null);
     }
 
-    public String getName2() {
-        return name2;
-    }
 
-    public void setName2(String name2) {
-        this.name2 = name2;
-    }
-
-    public String getSeriaN() {
-        return seriaN;
-    }
-
-    public void setSeriaN(String seriaN) {
-        this.seriaN = seriaN;
-    }
-
-    public String getNumberN() {
-        return numberN;
-    }
-
-    public void setNumberN(String numberN) {
-        this.numberN = numberN;
+    @Override
+    public String toString() {
+        return "Client{" +
+                "passportS='" + passportS + '\'' +
+                ", passportN='" + passportN + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
     }
 }

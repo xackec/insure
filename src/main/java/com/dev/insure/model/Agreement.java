@@ -1,12 +1,11 @@
 package com.dev.insure.model;
 
-import com.dev.insure.utils.INSURANCE_OBJECT_TYPE;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Digits;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "agreements")
@@ -19,14 +18,22 @@ public class Agreement {
     @NotNull
     private Integer amount;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     @NotNull
     private Date validFrom;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     @NotNull
     private  Date validTo;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private  Date calculationDate;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date submitDate;
 
     private String comment;
@@ -132,5 +139,18 @@ public class Agreement {
 
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Agreement{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", validFrom=" + validFrom +
+                ", validTo=" + validTo +
+                ", fee='" + fee + '\'' +
+                ", client=" + client +
+                ", subject=" + subject +
+                '}';
     }
 }

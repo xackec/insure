@@ -30,7 +30,7 @@ public class AgreementControllerTest {
         mvc.perform(get("/")
         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/index.jsp"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/homehome.jsp"))
                 .andExpect(model().attributeExists("agreements"));
 
     }

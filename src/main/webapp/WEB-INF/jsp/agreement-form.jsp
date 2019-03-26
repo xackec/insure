@@ -57,7 +57,7 @@
 			</spring:bind>
               <script>
                   $('.input-group.date').datepicker({
-                      format: "mm/dd/yyyy",
+                      format: "dd/mm/yyyy",
                       todayBtn: "linked",
                       autoclose: true,
                       todayHighlight: true
@@ -100,7 +100,7 @@
 						break;
 						case 'Дом': koef1 = 1.5;
 						break;
-						case '': koef1 = 1.3;
+						case 'Комната': koef1 = 1.3;
 						break;
 					}
 					var koef2;
@@ -177,7 +177,7 @@
 				</spring:bind>
 				<script>
                   $('.input-group.date').datepicker({
-                      format: "mm/dd/yyyy",
+                      format: "dd/mm/yyyy",
                       todayBtn: "linked",
                       autoclose: true,
                       todayHighlight: true
@@ -203,49 +203,44 @@
 				<input type="button" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients");' value="Выбрать"/>
 				</div>
 				
+				<spring:bind path="client.id">
+					<form:hidden path="client.id" id="hideid" />
+				</spring:bind>
+				
 				<spring:bind path="client.fullName">
 				<div class="form-group col-md-4" id="fullname">
-					<form:input type="text" class="form-control" id="fullName" path="client.fullName" placeholder="Фамилия Имя Отчество" />
-					<form:errors path="client.fullName" class="control-label" />
+					<form:input type="text" class="form-control" id="fullName" path="client.fullName" placeholder="Фамилия Имя Отчество" readonly="true" />
 				</div>
 				</spring:bind>
 				
+
 				<div class="form-group col-md-4">
-					<button type="submit" class="btn btn-primary">Изменить</button>
+					<input type="button" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients/"+document.getElementById("hideid").value);' value="Изменить"/>
 				</div>
+
 			</div>
 			<div class="form-row">
 				<spring:bind path="client.birthDate">
 				<div class="form-group col-md-4">
 				<label for="birthDate">Дата рождения</label>
 					<div class="input-group date">
-						<form:input type="text" class="form-control" id="birthDate" path="client.birthDate" placeholder="Дата" />
+						<form:input type="text" class="form-control" id="birthDate" path="client.birthDate" placeholder="Дата" readonly="true" />
 						 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 					</div>	
 				</div>
 				</spring:bind>
-				<script>
-                  $('.input-group.date').datepicker({
-                      format: "mm/dd/yyyy",
-                      todayBtn: "linked",
-                      autoclose: true,
-                      todayHighlight: true
-                  });
-				</script>
 				
-				<spring:bind path="client.seriaN">
-				<div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
+				<spring:bind path="client.passportS">
+				<div class="form-group col-md-4">
 					<label for="serial">Паспорт: серия</label>
-					<form:input type="text" class="form-control" id="serial" path="client.seriaN" placeholder="Серия" />
-					<form:errors path="client.seriaN" class="control-label" />
+					<form:input type="text" class="form-control" id="serial" path="client.passportS" placeholder="Серия" readonly="true" />
 				</div>
 				</spring:bind>
 				
-				<spring:bind path="client.numberN">
-				<div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
+				<spring:bind path="client.passportN">
+				<div class="form-group col-md-4">
 					<label for="number">№</label>
-					<form:input type="text" class="form-control" id="number" path="client.numberN" placeholder="Номер" />
-					<form:errors path="client.numberN" class="control-label" />
+					<form:input type="text" class="form-control" id="number" path="client.passportN" placeholder="Номер" readonly="true" />
 				</div>
 				</spring:bind>
 			</div>

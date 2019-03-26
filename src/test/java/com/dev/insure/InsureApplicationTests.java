@@ -28,7 +28,7 @@ public class InsureApplicationTests {
 	@Test
 	@Transactional
 	public void addClientTest() {
-		assertNotNull(clientRepository.save(new Client("2200123456",
+		assertNotNull(clientRepository.save(new Client("2200","123456",
 				"Иванов Иван Иванович", new Date(Calendar.getInstance().getTimeInMillis()))));
 	}
 

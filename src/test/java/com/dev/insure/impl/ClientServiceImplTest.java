@@ -36,7 +36,7 @@ public class ClientServiceImplTest {
 
     @Test
     public void create() {
-        assertNotNull( clientService.create(new Client("2200610552", "Иванов Иван Иванович",
+        assertNotNull( clientService.saveOrUpdate(new Client("2200","610552", "Иванов Иван Иванович",
                 new Date(Calendar.getInstance().getTimeInMillis()))));
     }
 

@@ -29,18 +29,15 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByFullName(fullName);
     }
 
-    @Override
-    public Client create(Client client) {
-        return clientRepository.save(client);
-    }
+
 
     @Override
-    public Client update(Client client) {
-        return null;
-    }
-
-    @Override
-    public Client findById(String id) {
+    public Client findById(Long id) {
         return clientRepository.findById(id);
+    }
+
+    @Override
+    public Client saveOrUpdate(Client client) {
+        return clientRepository.save(client);
     }
 }

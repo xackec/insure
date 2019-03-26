@@ -46,7 +46,7 @@ public class AgreementController {
         logger.debug("GET -> listAgreements()");
         List<Agreement> agreements = agreementService.findAll();
         model.addAttribute("agreements", agreements);
-        return "index";
+        return "home";
     }
 
     @RequestMapping(value = { "/create" }, method = RequestMethod.GET)
@@ -55,7 +55,7 @@ public class AgreementController {
         Agreement agreement = new Agreement();
         agreement.setClient(new Client());
         model.addAttribute("agreement", agreement);
-        return "agreement";
+        return "agreement-form";
     }
 
     @RequestMapping(value = "/agreements", method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class AgreementController {
         logger.debug("POST -> saveOrUpdateAgreement()");
 
         if(result.hasErrors()) {
-            return "agreement";
+            return "agreement-form";
         } else {
             redirectAttributes.addFlashAttribute("css", "success");
             if(agreement.isNew()){
@@ -87,7 +87,7 @@ public class AgreementController {
         Agreement agreement = agreementService.findById(id);
         model.addAttribute("agreement", agreement);
 
-        return "agreement";
+        return "agreement-form";
     }
 
 }

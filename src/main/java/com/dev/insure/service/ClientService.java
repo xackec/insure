@@ -11,11 +11,9 @@ public interface ClientService {
 
     List<Client> findByFullName(String fullName);
 
-    Client findById(String id);
+    Client findById(Long id);
 
-    Client create(Client client);
-
-    Client update(Client client);
+    Client saveOrUpdate(Client client);
 
 
 }

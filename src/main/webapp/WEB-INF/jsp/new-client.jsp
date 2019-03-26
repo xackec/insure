@@ -13,51 +13,87 @@
 </head>
 
 <body>
-	<div class="generic-container">
-		<div class="panel-create"><span class="lead">Новый клиент</span></div>
+	<spring:url value="/clients" var="clientActionUrl" />
+	<form:form class="form-group" method="post" modelAttribute="client" action="${clientActionUrl}">
+		<div class="generic-container">
+		<c:choose>
+			<c:when test="${client['new']}">
+				<div class="panel-create"><span class="lead">Новый клиент</span></div>
+			</c:when>
+			<c:otherwise>
+				<div class="panel-create"><span class="lead">Обновить клиента</span></div>
+			</c:otherwise>
+		</c:choose>
 			<fieldset>
 				  <legend></legend>
-					  <form:form method="POST" modelAttribute="client" class="form-horizontal">
-						  <div class="row form-inline">
-							<div class="col-md-4">
-								<form:input type="text" path="surname" id="surname" class="form-control" placeholder="Фамилия"/>
-											  <div class="has-error">
-												  <form:errors path="surname" class="help-inline"/>
-											  </div>
-							</div>
-							<div class="col-md-4">
-								<form:input type="text" path="name" id="name" class="form-control" placeholder="Имя"/>
-											  <div class="has-error">
-												  <form:errors path="name" class="help-inline"/>
-											  </div>
-							</div>
-							<div class="col-md-4">
-								<form:input type="text" path="name2" id="name2" class="form-control" placeholder="Отчество"/>
-											  <div class="has-error">
-												  <form:errors path="name2" class="help-inline"/>
-											  </div>
-							</div>
-						</div>
-						<div class="row form-inline">
-							  <div class="form-group col-md-12" id="birthdt">
-							  <label for="birth">Дата рождения</label>
-									<div class="input-group date">
-										<form:input type="text" path="birthDate" id="birth" class="form-control" placeholder="Дата рождения"/>
+						<div class="form-row">
+							<spring:bind path="fullName">
+								<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
+									<label for="surname">ФИО</label>
+									<form:input type="text" class="form-control" id="surname" path="fullName" placeholder="Фамилия Имя Отчество" />
+									<form:errors path="fullName" class="control-label" />
+								</div>
+							</spring:bind>
+						  
+							<spring:bind path="birthDate">
+								<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+									<label for="birthDate">Дата рождения</label>
+									<div class="input-group date" id="two">
+										<form:input type="text" class="form-control" id="birthDate" path="birthDate" placeholder="Дата" />
 										 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 									</div>
-								  		<script>
-															  $('.input-group.date').datepicker({
-																  format: "yyyy/mm/dd",
-																  todayBtn: "linked",
-																  autoclose: true,
-																  todayHighlight: true
-															  });
-										</script>
-							  </div>
+								</div>
+							</spring:bind>
+								<script>
+								  $('.input-group.date').datepicker({
+									  format: "dd/mm/yyyy",
+									  todayBtn: "linked",
+									  autoclose: true,
+									  todayHighlight: true
+								  });
+							  </script>
+							  
 						</div>
-                    </form:form>
+						<div class="form-row">
+						
+							  <spring:bind path="passportS">
+								<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
+									<label for="serial">Паспорт: серия</label>
+									<form:input type="text" class="form-control" id="serial" path="passportS" placeholder="Серия" />
+									<form:errors path="passportS" class="control-label" />
+								</div>
+							  </spring:bind>
+								
+								<spring:bind path="passportN">
+								<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
+									<label for="number">№</label>
+									<form:input type="text" class="form-control" id="number" path="passportN" placeholder="Номер" />
+									<form:errors path="passportN" class="control-label" />
+								</div>
+								</spring:bind>
+							</div>
+							
+							<div class="form-row">
+								<div class="form-group col-sm-6" id="chooseBtn">
+									<c:choose>
+									  <c:when test="${client['new']}">
+										 <button type="submit" class="btn btn-primary pull-right">Добавить
+													 </button>
+									  </c:when>
+									  <c:otherwise>
+										 <button type="submit" class="btn btn-primary pull-right">Обновить
+													 </button>
+									  </c:otherwise>
+									</c:choose>
+								</div>
+								<div class="form-group col-sm-6" id="closeBtn">
+									<input type="submit" class="btn btn-primary" onclick='window.location.href = "/agreements";return false;' value="Закрыть"/>
+								</div>
+							</div>
 			</fieldset>
+		</div>
 	</div>
+	</form:form>
 </body>
 
 </html>

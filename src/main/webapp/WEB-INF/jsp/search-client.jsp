@@ -39,17 +39,19 @@
                         <tr>
                             <th>ФИО</th>
                             <th>Дата рождения</th>
-                            <th>Паспортные данные</th>
+                            <th>Серия</th>
+							<th>Номер</th>
                             <th width="100"></th>
                             <th width="100"></th>
                         </tr>
                     </thead>
 						<script type="text/javascript">
-							function closepopup(fname, bdate, sn) {
+							function closepopup(fname, bdate, s,n, id) {
 								window.opener.document.getElementById('fullName').value = fname;
 								window.opener.document.getElementById('birthDate').value = bdate;
-								window.opener.document.getElementById('serial').value = sn.substr(0,4);
-								window.opener.document.getElementById('number').value = sn.substr(4);
+								window.opener.document.getElementById('serial').value = s;
+								window.opener.document.getElementById('number').value = n;
+								window.opener.document.getElementById('hideid').value = id;
 								self.close();
 							}
 						</script>
@@ -63,8 +65,9 @@
                         <tr>
                             <td>${client.fullName}</td>
                             <td>${client.birthDate}</td>
-                            <td>${client.passportSN}</td>
-                            <td><button class="btn btn-primary btn-sm" onclick='closepopup("${client.fullName}","${client.birthDate}","${client.passportSN}");'>Выбрать</button></td>
+                            <td>${client.passportS}</td>
+							<td>${client.passportN}</td>
+                            <td><button class="btn btn-primary btn-sm" onclick='closepopup("${client.fullName}","${client.birthDate}","${client.passportS}","${client.passportN}","${client.id}");'>Выбрать</button></td>
                         </tr>
                     </c:forEach>
                     </tbody>
