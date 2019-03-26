@@ -1,15 +1,16 @@
 
 body, #mainWrapper {
-    height: 100%;
+    overflow:auto;
     background-color:rgb(245, 245, 245);
 }
 
 body, .form-control{
+    overflow:auto;
     font-size:12px!important;
 }
 
 h1{
-    font-size:32px!important;
+    font-size:16px!important;
     text-align: center;
 }
 
@@ -54,11 +55,9 @@ h1{
     width: 160px;
 }
 
-
-
 .generic-container {
-  position:fixed;
-  width: 850px;
+  overflow:auto;
+  width: 80%;
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 20px;

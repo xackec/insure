@@ -32,6 +32,12 @@ public class Client{
     @Transient
     private String name2;
 
+    @Transient
+    private String seriaN;
+
+    @Transient
+    private String numberN;
+
 
     public Client() {}
 
@@ -87,5 +93,21 @@ public class Client{
 
     public void setName2(String name2) {
         this.name2 = name2;
+    }
+
+    public String getSeriaN() {
+        return seriaN;
+    }
+
+    public void setSeriaN(String seriaN) {
+        this.seriaN = seriaN;
+    }
+
+    public String getNumberN() {
+        return numberN;
+    }
+
+    public void setNumberN(String numberN) {
+        this.numberN = numberN;
     }
 }

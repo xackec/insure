@@ -14,6 +14,10 @@ body, .form-control{
     text-align: left;
 }
 
+.panel-create{
+    text-align: center;
+}
+
 .generic-container {
   position:fixed;
   margin-left: 5px;

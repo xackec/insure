@@ -1,8 +1,10 @@
-﻿<%@ page session="false"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+﻿<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="com.dev.insure.model.Client" %>
+<%@ page session="true" %>
+
 
 <!DOCTYPE html>
 <head>
@@ -17,18 +19,7 @@
 
 <jsp:include page="fragments/header.jsp" />
 
-<body>
-
-	<c:choose>
-		<c:when test="${agreement['new']}">
-			<h1>Новый договор</h1>
-		</c:when>
-		<c:otherwise>
-			<h1>Изменить договор</h1>
-		</c:otherwise>
-	</c:choose>
-	<br />
-	
+<body>	
 	<spring:url value="/agreements" var="agreementActionUrl" />
 
 	<form:form class="form-group" method="post" modelAttribute="agreement" action="${agreementActionUrl}">
@@ -85,7 +76,7 @@
 			<spring:bind path="subject.constructionYear">
             <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
               <label for="subjectYear">Год постройки</label>
-              <form:input type="number" min="1900" max="2019" step="1" path="subject.constructionYear" class="form-control" id="subjectYear" />
+              <form:input type="number" min="1900" max="2019" step="1" path="subject.constructionYear" class="form-control" id="subjectYear" value="2000" />
 			  <form:errors path="subject.constructionYear" class="control-label" />
             </div>
 			</spring:bind>
@@ -209,37 +200,162 @@
 							mywindow.focus();
 						}
 					</script>
-				<input type="submit" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients");return false;' value="Выбрать"/>
+				<input type="button" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients");' value="Выбрать"/>
 				</div>
 				
-				
+				<spring:bind path="client.fullName">
 				<div class="form-group col-md-4" id="fullname">
-					<input type="text" class="form-control" id="fullName" placeholder="Фамилия Имя Отчество">
+					<form:input type="text" class="form-control" id="fullName" path="client.fullName" placeholder="Фамилия Имя Отчество" />
+					<form:errors path="client.fullName" class="control-label" />
 				</div>
-				
+				</spring:bind>
 				
 				<div class="form-group col-md-4">
 					<button type="submit" class="btn btn-primary">Изменить</button>
 				</div>
 			</div>
 			<div class="form-row">
+				<spring:bind path="client.birthDate">
 				<div class="form-group col-md-4">
-				<label for="validFrom">Дата рождения</label>
+				<label for="birthDate">Дата рождения</label>
 					<div class="input-group date">
-						<input type="text" class="form-control" id="birthDate" placeholder="Дата рождения">
-						<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+						<form:input type="text" class="form-control" id="birthDate" path="client.birthDate" placeholder="Дата" />
+						 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 					</div>	
 				</div>
-				<div class="form-group col-md-4">
+				</spring:bind>
+				<script>
+                  $('.input-group.date').datepicker({
+                      format: "mm/dd/yyyy",
+                      todayBtn: "linked",
+                      autoclose: true,
+                      todayHighlight: true
+                  });
+				</script>
+				
+				<spring:bind path="client.seriaN">
+				<div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
 					<label for="serial">Паспорт: серия</label>
-					<input type="text" class="form-control" id="serial" placeholder="Серия">
+					<form:input type="text" class="form-control" id="serial" path="client.seriaN" placeholder="Серия" />
+					<form:errors path="client.seriaN" class="control-label" />
 				</div>
-				<div class="form-group col-md-4">
+				</spring:bind>
+				
+				<spring:bind path="client.numberN">
+				<div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
 					<label for="number">№</label>
-					<input type="text" class="form-control" id="number" placeholder="Номер">
+					<form:input type="text" class="form-control" id="number" path="client.numberN" placeholder="Номер" />
+					<form:errors path="client.numberN" class="control-label" />
 				</div>
+				</spring:bind>
 			</div>
 		  </fieldset>
+		  <fieldset>
+			<legend>Адрес недвижимости</legend>
+				<div class="form-row">
+					<spring:bind path="subject.state">
+						<div class="form-group col-sm-2 ${status.error ? 'has-error' : ''}">
+						  <label for="subjectstate">Государство</label>
+								<form:select path="subject.state" id="subjectstate" items="<%= com.dev.insure.utils.STATES.values() %>" multiple="false" size="1" class="form-control" />
+								<form:errors path="subject.state" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.postcode">
+						<div class="form-group col-sm-2 ${status.error ? 'has-error' : ''}">
+							<label for="postcode">Почтовый индекс</label>
+							<form:input type="text" class="form-control" id="postcode" path="subject.postcode" placeholder="Индекс" />
+							<form:errors path="subject.postcode" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.region">
+						<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+							<label for="region">Республика</label>
+							<form:input type="text" class="form-control" id="region" path="subject.region" placeholder="Название" />
+							<form:errors path="subject.region" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.district">
+						<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+							<label for="district">Район</label>
+							<form:input type="text" class="form-control" id="district" path="subject.district" placeholder="Название" />
+							<form:errors path="subject.district" class="control-label" />
+						</div>
+					</spring:bind>
+				</div>		
+				<div class="form-row">
+					<spring:bind path="subject.city">
+						<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+							<label for="city">Населенный пункт</label>
+							<form:input type="text" class="form-control" id="city" path="subject.city" placeholder="Название" />
+							<form:errors path="subject.city" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.street">
+						<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+							<label for="street">Улица</label>
+							<form:input type="text" class="form-control" id="street" path="subject.street" placeholder="Название" />
+							<form:errors path="subject.street" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.buildnum">
+						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+							<label for="buildnum">Дом</label>
+							<form:input type="text" class="form-control" id="buildnum" path="subject.buildnum"  />
+							<form:errors path="subject.buildnum" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.part">
+						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+							<label for="part">Корпус</label>
+							<form:input type="text" class="form-control" id="part" path="subject.part"  />
+							<form:errors path="subject.part" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.bldg">
+						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+							<label for="bldg">Строение</label>
+							<form:input type="text" class="form-control" id="bldg" path="subject.bldg"  />
+							<form:errors path="subject.bldg" class="control-label" />
+						</div>
+					</spring:bind>
+					
+					<spring:bind path="subject.flatnum">
+						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+							<label for="flatnum">Квартира</label>
+							<form:input type="text" class="form-control" id="flatnum" path="subject.flatnum"  />
+							<form:errors path="subject.flatnum" class="control-label" />
+						</div>
+					</spring:bind>
+				</div>
+				 <div class="form-group">
+					  <label for="comment">Комментарий (не печатается на полисе)</label>
+					  <textarea style="overflow:auto;resize:none" class="form-control" rows="4" id="comment"><c:out value="${comment}" /></textarea>
+				</div> 
+				<div class="form-row">
+					<div class="form-group col-sm-6" id="chooseBtn">
+						<c:choose>
+						  <c:when test="${agreement['new']}">
+							 <button type="submit" class="btn btn-primary pull-right">Добавить
+										 </button>
+						  </c:when>
+						  <c:otherwise>
+							 <button type="submit" class="btn btn-primary pull-right">Обновить
+										 </button>
+						  </c:otherwise>
+						</c:choose>
+					</div>
+					<div class="form-group col-sm-6" id="closeBtn">
+						<input type="submit" class="btn btn-primary" onclick='self.close();return false;' value="Закрыть"/>
+					</div>
+				</div>
+		</fieldset>
     </div>
 	</form:form>
 </body>

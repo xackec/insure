@@ -44,6 +44,15 @@
                             <th width="100"></th>
                         </tr>
                     </thead>
+						<script type="text/javascript">
+							function closepopup(fname, bdate, sn) {
+								window.opener.document.getElementById('fullName').value = fname;
+								window.opener.document.getElementById('birthDate').value = bdate;
+								window.opener.document.getElementById('serial').value = sn.substr(0,4);
+								window.opener.document.getElementById('number').value = sn.substr(4);
+								self.close();
+							}
+						</script>
                     <tbody>
 					<c:if test="${empty clients}">
 						<tr>
@@ -55,24 +64,13 @@
                             <td>${client.fullName}</td>
                             <td>${client.birthDate}</td>
                             <td>${client.passportSN}</td>
-							<td><a href="<c:url value="/clients/${client.passportSN}" />">Выбрать</a></td>
+                            <td><button class="btn btn-primary btn-sm" onclick='closepopup("${client.fullName}","${client.birthDate}","${client.passportSN}");'>Выбрать</button></td>
                         </tr>
                     </c:forEach>
                     </tbody>
     </table>
 	<div class="form-row">
 		<div class="form-group col-sm-6" id="chooseBtn">
-					<script type="text/javascript">
-						function mypopup(url) {
-							width = window.screen.width;
-							height = window.screen.height;
-							mywindow = window.open(url, "Title",
-								"location=0,status=1,scrollbars=1,resizable=0,menubar=0,toolbar=no,width="
-											+ width + ",height=" + height);
-							mywindow.moveTo(0, 0);
-							mywindow.focus();
-						}
-					</script>
 				<input type="submit" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients/new");return false;' value="Новый"/>
 		</div>
 		<div class="form-group col-sm-6" id="closeBtn">

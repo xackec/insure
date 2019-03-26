@@ -24,17 +24,12 @@ public class AgreementServiceImpl implements AgreementService {
     }
 
     @Override
-    public Agreement create(Agreement agreement) {
-        return repository.save(agreement);
-    }
-
-    @Override
-    public Agreement update(Agreement update) {
-        return null;
-    }
-
-    @Override
     public Agreement findById(int id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public Agreement saveOrUpdate(Agreement agreement) {
+            return repository.save(agreement);
     }
 }

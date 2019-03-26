@@ -10,8 +10,5 @@ public interface AgreementService {
 
     Agreement findById(int id);
 
-    Agreement create(Agreement agreement);
-
-    Agreement update(Agreement update);
-
+    Agreement saveOrUpdate(Agreement agreement);
 }
