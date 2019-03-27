@@ -35,7 +35,7 @@
 					</script>
 			  </div>
 		</fieldset>
-	<div style="height:400px;overflow:auto;">
+	<div style="height:300px;overflow:auto;">
 		<table class="table table-hover">
 						<thead>
 							<tr>

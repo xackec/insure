@@ -355,7 +355,7 @@
 						</c:choose>
 					</div>
 					<div class="form-group col-sm-6" id="closeBtn">
-						<input type="submit" class="btn btn-primary" onclick='self.close();return false;' value="Закрыть"/>
+						<input type="submit" class="btn btn-primary" onclick='window.location.href = "/agreements";return false;' value="Закрыть"/>
 					</div>
 				</div>
 		</fieldset>
