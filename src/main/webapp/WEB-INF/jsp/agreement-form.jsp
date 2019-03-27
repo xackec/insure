@@ -29,7 +29,7 @@
           <legend>Расчёт</legend>
             <div class="form-row">
 			<spring:bind path="amount">
-              <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+              <div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
                 <label for="amount">Страховая сумма</label>
                 <form:input type="text" class="form-control" id="amount" path="amount" placeholder="Сумма в рублях" />
 				<form:errors path="amount" class="control-label" />
@@ -37,7 +37,7 @@
 			 </spring:bind>
 			 
 			 <spring:bind path="validFrom">
-			  <div class="form-group col-md-4 ${status.error ? 'has-error' : ''}">
+			  <div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
 				<label for="validFrom">Действителен с</label>
 				<div class="input-group date">
 					<form:input type="text" class="form-control" id="validFrom" path="validFrom" placeholder="Дата начала" />
@@ -47,9 +47,9 @@
 			</spring:bind>
 			
 			<spring:bind path="validTo">
-			<div class="form-group col-md-2 ${status.error ? 'has-error' : ''}">
+			<div class="form-group col-sm-2 ${status.error ? 'has-error' : ''}">
 				<label for="validTo">По</label>
-				<div class="input-group date" id="two">
+				<div class="input-group date">
 					<form:input type="text" class="form-control" id="validTo" path="validTo" placeholder="Дата окончания" />
                      <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
               </div>
@@ -66,30 +66,28 @@
             </div>
 			
 			<spring:bind path="subject.objType">
-            <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+            <div class="form-group col-sm-6">
               <label for="subjectType">Тип недвижимости</label>
 					<form:select path="subject.objType" id="subjectType" items="<%= com.dev.insure.utils.INSURANCE_OBJECT_TYPE.values() %>" multiple="false" size="1" class="form-control" />
-					<form:errors path="subject.objType" class="control-label" />
             </div>
 			</spring:bind>
 			
 			<spring:bind path="subject.constructionYear">
-            <div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+            <div class="form-group col-sm-6">
               <label for="subjectYear">Год постройки</label>
               <form:input type="number" min="1900" max="2019" step="1" path="subject.constructionYear" class="form-control" id="subjectYear" value="2000" />
-			  <form:errors path="subject.constructionYear" class="control-label" />
             </div>
 			</spring:bind>
 			
 			<spring:bind path="subject.square">
-			<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+			<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
               <label for="square">Площадь</label>
               <form:input type="text" path="subject.square" class="form-control" id="square" placeholder="кв. м." />
 			  <form:errors path="subject.square" class="control-label" />
             </div>
 			</spring:bind>
 			
-			<div class="form-group col-md-9 calculate">
+			<div class="form-group col-sm-9 calculate">
               <input type="button" class="btn btn-primary" onclick="calcFunction()" value="Рассчитать" />
 			  <script>
 				function calcFunction()
@@ -114,39 +112,50 @@
 					}
 					var koef3;
 					var tmp = document.getElementById("square").value;
-					if(temp<50) {
+					if(tmp<50) {
 						koef3 = 1.2;
-					} else if(temp<=100) {
+					} else if(tmp<=100) {
 						koef3 = 1.5;
-					} else if(temp>100) {
+					} else if(tmp>100) {
 						koef3 = 2.0;
 					}
-					alert(koef1);
-					alert(koef2);
-					alert(koef3);
-					var date1 = new Date(document.getElementById("validFrom").value);
-					var date2 = new Date(document.getElementById("validTo").value);
+					var fr = document.getElementById("validFrom").value.split("/");
+					var date1 = new Date(fr[2], fr[1] - 1, fr[0]);
+					var to = document.getElementById("validTo").value.split("/");
+					var date2 = new Date(to[2], to[1] - 1, to[0]);
 					var timeDiff = Math.abs(date2.getTime() - date1.getTime());
 					var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
-					var amount = document.getElementById("amount").value;
-				    document.getElementById("fee").value = (amount/diffDays)*koef1*koef2*koef3;
-					document.getElementById("calcDate").value = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+					
+					var amount = Number(document.getElementById("amount").value);
+				    document.getElementById("fee").value = Number(Math.round(((amount/diffDays)*koef1*koef2*koef3)+'e2')+'e-2');
+					var today = new Date();
+					var dd = today.getDate();
+					var mm = today.getMonth() + 1; //January is 0!
+
+					var yyyy = today.getFullYear();
+					if (dd < 10) {
+					  dd = '0' + dd;
+					} 
+					if (mm < 10) {
+					  mm = '0' + mm;
+					} 
+					var today = dd + '/' + mm + '/' + yyyy;
+					document.getElementById("calcDate").value = today;
 				return false;
 				}
 				</script>
             </div>
 			
 			<div class="form-row">
-			<spring:bind path="subject.square">
-				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+			<spring:bind path="calculationDate">
+				<div class="form-group col-sm-6">
 					<label for="calcDate">Дата расчёта</label>
 					<form:input type="text" path="calculationDate" class="form-control" id="calcDate" placeholder="Дата" readonly="true" />
-					<form:errors path="calculationDate" class="control-label" />
 				</div>
 			</spring:bind>
 			
 			<spring:bind path="fee">
-				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+				<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
 					<label for="fee">Премия</label>
 					<form:input type="text" path="fee" class="form-control" id="fee" placeholder="Рубли" />
 					<form:errors path="fee" class="control-label" />
@@ -158,11 +167,11 @@
 		  <fieldset>
 			<legend></legend>
 			<div class="form-row">
-			<spring:bind path="id">
-				<div class="form-group col-md-6 ${status.error ? 'has-error' : ''}">
+			<spring:bind path="num">
+				<div class="form-group col-sm-6 ${status.error ? 'has-error' : ''}">
 					<label for="num">№ договора</label>
-					<form:input type="text" path="id" class="form-control" id="num" placeholder="Номер" />
-					<form:errors path="id" class="control-label" />
+					<form:input type="text" path="num" class="form-control" id="num" placeholder="Номер" />
+					<form:errors path="num" class="control-label" />
 				</div>
 				</spring:bind>
 				
@@ -170,7 +179,7 @@
 				<div class="form-group col-md-6">
 					<label for="creationDate">Дата заключения</label>
 					<div class="input-group date" id="two">
-						<form:input type="text" class="form-control" id="creationDate" path="submitDate" placeholder="Дата" />
+						<form:input type="text" class="form-control" id="creationDate" path="submitDate" placeholder="Дата" readonly="true"/>
 						 <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 					</div>
 				</div>
@@ -188,7 +197,7 @@
 		  <fieldset>
 			<legend>Страхователь</legend>
 			<div class="form-row">
-				<div class="form-group col-md-4" id="chooseBtn">
+				<div class="form-group col-sm-4" id="chooseBtn">
 					<script type="text/javascript">
 						function mypopup(url) {
 							width = window.screen.width;
@@ -208,14 +217,14 @@
 				</spring:bind>
 				
 				<spring:bind path="client.fullName">
-				<div class="form-group col-md-4" id="fullname">
+				<div class="form-group col-sm-4" id="fullname">
 					<form:input type="text" class="form-control" id="fullName" path="client.fullName" placeholder="Фамилия Имя Отчество" readonly="true" />
 				</div>
 				</spring:bind>
 				
 
-				<div class="form-group col-md-4">
-					<input type="button" class="btn btn-primary" onclick='mypopup("http://localhost:8080/clients/"+document.getElementById("hideid").value);' value="Изменить"/>
+				<div class="form-group col-sm-4">
+					<input type="button" class="btn btn-primary" onclick='if(document.getElementById("hideid").value!=""){mypopup("http://localhost:8080/clients/change-"+document.getElementById("hideid").value);}' value="Изменить"/>
 				</div>
 
 			</div>
@@ -231,14 +240,14 @@
 				</spring:bind>
 				
 				<spring:bind path="client.passportS">
-				<div class="form-group col-md-4">
+				<div class="form-group col-sm-4">
 					<label for="serial">Паспорт: серия</label>
 					<form:input type="text" class="form-control" id="serial" path="client.passportS" placeholder="Серия" readonly="true" />
 				</div>
 				</spring:bind>
 				
 				<spring:bind path="client.passportN">
-				<div class="form-group col-md-4">
+				<div class="form-group col-sm-4">
 					<label for="number">№</label>
 					<form:input type="text" class="form-control" id="number" path="client.passportN" placeholder="Номер" readonly="true" />
 				</div>
@@ -257,10 +266,9 @@
 					</spring:bind>
 					
 					<spring:bind path="subject.postcode">
-						<div class="form-group col-sm-2 ${status.error ? 'has-error' : ''}">
+						<div class="form-group col-sm-2">
 							<label for="postcode">Почтовый индекс</label>
 							<form:input type="text" class="form-control" id="postcode" path="subject.postcode" placeholder="Индекс" />
-							<form:errors path="subject.postcode" class="control-label" />
 						</div>
 					</spring:bind>
 					
@@ -273,10 +281,9 @@
 					</spring:bind>
 					
 					<spring:bind path="subject.district">
-						<div class="form-group col-sm-4 ${status.error ? 'has-error' : ''}">
+						<div class="form-group col-sm-4">
 							<label for="district">Район</label>
 							<form:input type="text" class="form-control" id="district" path="subject.district" placeholder="Название" />
-							<form:errors path="subject.district" class="control-label" />
 						</div>
 					</spring:bind>
 				</div>		
@@ -298,26 +305,23 @@
 					</spring:bind>
 					
 					<spring:bind path="subject.buildnum">
-						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+						<div class="form-group col-sm-1">
 							<label for="buildnum">Дом</label>
 							<form:input type="text" class="form-control" id="buildnum" path="subject.buildnum"  />
-							<form:errors path="subject.buildnum" class="control-label" />
 						</div>
 					</spring:bind>
 					
 					<spring:bind path="subject.part">
-						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+						<div class="form-group col-sm-1">
 							<label for="part">Корпус</label>
 							<form:input type="text" class="form-control" id="part" path="subject.part"  />
-							<form:errors path="subject.part" class="control-label" />
 						</div>
 					</spring:bind>
 					
 					<spring:bind path="subject.bldg">
-						<div class="form-group col-sm-1 ${status.error ? 'has-error' : ''}">
+						<div class="form-group col-sm-1">
 							<label for="bldg">Строение</label>
 							<form:input type="text" class="form-control" id="bldg" path="subject.bldg"  />
-							<form:errors path="subject.bldg" class="control-label" />
 						</div>
 					</spring:bind>
 					
@@ -329,10 +333,14 @@
 						</div>
 					</spring:bind>
 				</div>
-				 <div class="form-group">
-					  <label for="comment">Комментарий (не печатается на полисе)</label>
-					  <textarea style="overflow:auto;resize:none" class="form-control" rows="4" id="comment"><c:out value="${comment}" /></textarea>
-				</div> 
+
+				<spring:bind path="comment">
+					 <div class="form-group col-sm-12">
+						  <label for="comment">Комментарий (не печатается на полисе)</label>
+						  <form:textarea style="overflow:auto;resize:none" class="form-control" rows="4" path="comment" id="comment" />
+					</div> 
+				</spring:bind>
+				
 				<div class="form-row">
 					<div class="form-group col-sm-6" id="chooseBtn">
 						<c:choose>

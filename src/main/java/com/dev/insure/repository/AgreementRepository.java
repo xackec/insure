@@ -5,11 +5,11 @@ import org.springframework.data.repository.Repository;
 
 import java.util.List;
 
-public interface AgreementRepository extends Repository<Agreement, Integer> {
+public interface AgreementRepository extends Repository<Agreement, Long> {
 
     List findAll();
 
-    Agreement findById(Integer id);
+    Agreement findById(Long id);
 
     Agreement save(Agreement agreement);
 }

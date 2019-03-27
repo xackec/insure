@@ -29,15 +29,24 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByFullName(fullName);
     }
 
-
-
     @Override
     public Client findById(Long id) {
         return clientRepository.findById(id);
     }
 
+
     @Override
     public Client saveOrUpdate(Client client) {
-        return clientRepository.save(client);
+        if(client.isNew()) {
+            return clientRepository.save(client);
+        } else {
+            Client exist = clientRepository.findById(client.getId());
+            exist.setFullName(client.getFullName());
+            exist.setBirthDate(client.getBirthDate());
+            exist.setPassportN(client.getPassportN());
+            exist.setPassportS(client.getPassportS());
+            exist.setAgreements(client.getAgreements());
+            return clientRepository.save(exist);
+        }
     }
 }

@@ -42,10 +42,11 @@ public class ClientController {
     public String clients(ModelMap model) {
         logger.debug("GET -> clients()");
         model.addAttribute("clients", clientService.findAll());
-        return "search-client";
+        return "all-clients";
     }
 
-    @RequestMapping(value = { "/{id}" }, method = RequestMethod.GET)
+
+    @RequestMapping(value = { "/change-{id}" }, method = RequestMethod.GET)
     public String changeClient(@PathVariable("id") Long id,ModelMap model) {
         logger.debug("GET -> changeClient() - {}", id);
         model.addAttribute("client", clientService.findById(id));
@@ -60,7 +61,7 @@ public class ClientController {
             return "new-client";
         } else {
             clientService.saveOrUpdate(client);
-            return "redirect:/agreements";
+            return "redirect:/clients";
         }
     }
 
@@ -72,11 +73,11 @@ public class ClientController {
         return "new-client";
     }
 
-    @RequestMapping(value = { "/clients/search-{fullName}" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/search-{fullName}" }, method = RequestMethod.GET)
     public String searchClientByFullname(@PathVariable("fullName") String fullName, Model model) {
         logger.debug("GET -> searchClientByFullname() - " + fullName);
         List<Client> clients = clientService.findByFullName(fullName);
         model.addAttribute("clients", clients);
-        return "search-client";
+        return "all-clients";
     }
 }

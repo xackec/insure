@@ -31,7 +31,7 @@
                     <tbody>
                     <c:forEach items="${agreements}" var="agreement">
                         <tr>
-                            <td>${agreement.id}</td>
+                            <td>${agreement.num}</td>
                             <td>${agreement.validFrom}</td>
                             <td>${agreement.client.fullName}</td>
                             <td>${agreement.fee}</td>

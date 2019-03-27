@@ -11,8 +11,10 @@ import java.util.regex.Pattern;
 @Component
 public class ClientFormValidator implements Validator {
 
-    private final Pattern DIGITS_REGEX = Pattern.compile("^(0|[1-9][0-9]*)$");
-    private final Pattern LETTERS_REGEX = Pattern.compile("^[а-яА-Яa-zA-Z0-9.\\-\\/+=@_ ]*$");
+    private static final Pattern DIGITS_REGEX = Pattern.compile("^(0|[1-9][0-9]*)$");
+    private static final Pattern LETTERS_REGEX = Pattern.compile("^[а-яА-Яa-zA-Z0-9.\\-\\/+=@_ ]*$");
+    private static final Pattern SERIAL_REGEX = Pattern.compile("^\\d{1,4}$");
+    private static final Pattern NUMBER_REGEX = Pattern.compile("^\\d{1,6}$");
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -25,21 +27,20 @@ public class ClientFormValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "fullName", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "birthDate", "NotEmpty");
-
-
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passportS", "NotEmpty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passportN", "NotEmpty");
+
+        if(client.getPassportS()!=null && !SERIAL_REGEX.matcher(client.getPassportS()).matches()) {
+            errors.rejectValue("passportS", "Invalid");
+        }
+
+        if(client.getPassportN()!=null && !NUMBER_REGEX.matcher(client.getPassportN()).matches()) {
+            errors.rejectValue("passportN", "Invalid");
+        }
 
         if(client.getFullName()!=null && !LETTERS_REGEX.matcher(client.getFullName()).matches()) {
             errors.rejectValue("fullName", "Invalid");
         }
 
-        if(client.getPassportS()!=null && !DIGITS_REGEX.matcher(client.getPassportS()).matches()) {
-            errors.rejectValue("passportS", "Invalid");
-        }
-
-        if(client.getPassportN()!=null && !DIGITS_REGEX.matcher(client.getPassportN()).matches()) {
-            errors.rejectValue("passportN", "Invalid");
-        }
     }
 }

@@ -4,6 +4,7 @@ import com.dev.insure.utils.INSURANCE_OBJECT_TYPE;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,8 +18,9 @@ public class Subject {
     private Long id;
 
     @Column(name = "year", nullable = false)
-    private int constructionYear;
+    private Integer constructionYear;
 
+    @Pattern(regexp = "(^\\d{1,4}$)|(^\\d{0,4}[.]\\d{1,1}$)")
     @NotNull
     private String square;
 
@@ -41,27 +43,20 @@ public class Subject {
     @NotNull
     private String street;
 
-    private int buildnum;
+    private Integer buildnum;
 
     private String part;
 
     private String bldg;
 
     @NotNull
-    private int flatnum;
+    private Integer flatnum;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Agreement> subjects = new HashSet<>();
 
     public Subject() {};
 
-    public int getConstructionYear() {
-        return constructionYear;
-    }
-
-    public void setConstructionYear(int constructionYear) {
-        this.constructionYear = constructionYear;
-    }
 
     public String getSquare() {
         return square;
@@ -127,13 +122,6 @@ public class Subject {
         this.street = street;
     }
 
-    public int getBuildnum() {
-        return buildnum;
-    }
-
-    public void setBuildnum(int buildnum) {
-        this.buildnum = buildnum;
-    }
 
     public String getPart() {
         return part;
@@ -151,11 +139,46 @@ public class Subject {
         this.bldg = bldg;
     }
 
-    public int getFlatnum() {
+    public Integer getConstructionYear() {
+        return constructionYear;
+    }
+
+    public void setConstructionYear(Integer constructionYear) {
+        this.constructionYear = constructionYear;
+    }
+
+    public Integer getBuildnum() {
+        return buildnum;
+    }
+
+    public void setBuildnum(Integer buildnum) {
+        this.buildnum = buildnum;
+    }
+
+    public Integer getFlatnum() {
         return flatnum;
     }
 
-    public void setFlatnum(int flatnum) {
+    public void setFlatnum(Integer flatnum) {
         this.flatnum = flatnum;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "constructionYear=" + constructionYear +
+                ", square='" + square + '\'' +
+                ", objType=" + objType +
+                ", state='" + state + '\'' +
+                ", postcode='" + postcode + '\'' +
+                ", region='" + region + '\'' +
+                ", district='" + district + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", buildnum=" + buildnum +
+                ", part='" + part + '\'' +
+                ", bldg='" + bldg + '\'' +
+                ", flatnum=" + flatnum +
+                '}';
     }
 }

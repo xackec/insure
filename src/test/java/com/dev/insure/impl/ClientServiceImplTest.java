@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Date;
+import javax.transaction.Transactional;
 import java.util.Calendar;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -41,11 +42,22 @@ public class ClientServiceImplTest {
     }
 
     @Test
-    public void findByFullNameTest() {
-        assertNotNull(clientService.findByFullName("Иванов Иван Иванович"));
+    @Transactional
+    public void saveUpdateTest() {
+        Client first = clientService.saveOrUpdate(new Client("1","2","Петров", new Date()));
+        assertNotNull(first.getId());
+        Client second = clientService.findById(first.getId());
+        second.setFullName("Сидоров");
+        Client updated = clientService.saveOrUpdate(second);
+        assertEquals(first.getId(),updated.getId());
+        assertEquals(updated.getFullName(),"Сидоров");
     }
 
     @Test
-    public void update() {
+    @Transactional
+    public void findByFullNameTest() {
+        clientService.saveOrUpdate(new Client("1","2","Иванов Иван Иванович", new Date()));
+        assertNotNull(clientService.findByFullName("Иванов Иван Иванович"));
     }
+
 }

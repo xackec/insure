@@ -24,7 +24,7 @@ public class AgreementServiceImpl implements AgreementService {
     }
 
     @Override
-    public Agreement findById(int id) {
+    public Agreement findById(Long id) {
         return repository.findById(id);
     }
 

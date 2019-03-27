@@ -8,7 +8,7 @@ public interface AgreementService {
 
     List<Agreement> findAll();
 
-    Agreement findById(int id);
+    Agreement findById(Long id);
 
     Agreement saveOrUpdate(Agreement agreement);
 }

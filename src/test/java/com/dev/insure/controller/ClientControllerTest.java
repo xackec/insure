@@ -29,7 +29,7 @@ public class ClientControllerTest {
         mvc.perform(get("/clients")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/search-client.jsp"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/all-clients.jsp"))
                 .andExpect(model().attributeExists("clients"));
     }
 

@@ -18,11 +18,11 @@ public class Client{
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Pattern(regexp="^(0|[1-9][0-9]*)$")
+    @Pattern(regexp = "^\\d{1,4}$")
     @Column(name = "passports", nullable = false)
     private String passportS;
 
-    @Pattern(regexp="^(0|[1-9][0-9]*)$")
+    @Pattern(regexp = "^\\d{1,6}$")
     @Column(name = "passportn", nullable = false)
     private String passportN;
 
@@ -31,7 +31,6 @@ public class Client{
     @Column(name = "fullname")
     private String fullName;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.DATE)
     @Column(name = "birthdate")
     private Date birthDate;

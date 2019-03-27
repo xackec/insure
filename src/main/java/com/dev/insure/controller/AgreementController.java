@@ -59,20 +59,14 @@ public class AgreementController {
     }
 
     @RequestMapping(value = "/agreements", method = RequestMethod.POST)
-    public String saveOrUpdateUser(@ModelAttribute("agreement") @Validated Agreement agreement,
+    public String saveOrUpdateAgreement(@ModelAttribute("agreement") @Validated Agreement agreement,
                                    BindingResult result, Model model,
                                    final RedirectAttributes redirectAttributes) {
-        logger.debug("POST -> saveOrUpdateAgreement()");
-
+        logger.debug("POST -> saveOrUpdateAgreement() : {}",agreement);
         if(result.hasErrors()) {
+            logger.debug(result.getAllErrors().toString());
             return "agreement-form";
         } else {
-            redirectAttributes.addFlashAttribute("css", "success");
-            if(agreement.isNew()){
-                redirectAttributes.addFlashAttribute("msg", "Agreement added successfully!");
-            }else{
-                redirectAttributes.addFlashAttribute("msg", "Agreement updated successfully!");
-            }
 
             agreementService.saveOrUpdate(agreement);
 
@@ -81,7 +75,7 @@ public class AgreementController {
     }
 
     @RequestMapping(value = "/agreements/{id}", method = RequestMethod.GET)
-    public String showAgreement(@PathVariable("id") int id, Model model) {
+    public String showAgreement(@PathVariable("id") Long id, Model model) {
         logger.debug("showAgreement() id: {}", id);
 
         Agreement agreement = agreementService.findById(id);

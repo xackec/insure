@@ -20,7 +20,7 @@ public class ValidatorTests {
 
     @Test(expected = TransactionSystemException.class)
     public void AgreementValidationTest() {
-        Agreement agreement = new Agreement(2,22,new Date(Calendar.getInstance().getTimeInMillis()),
+        Agreement agreement = new Agreement("1","22", new Date(Calendar.getInstance().getTimeInMillis()),
                 new Date(Calendar.getInstance().getTimeInMillis()), "123.45");
         agreementRepository.save(agreement);
 
